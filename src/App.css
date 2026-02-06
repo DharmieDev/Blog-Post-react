@@ -58,8 +58,21 @@ h3 {
 }
 
 .sidebar li {
-    margin-left: 30px;
+    margin-left: 10px;
     list-style: none;
+}
+
+.menu {
+    display: none;
+}
+
+.nav NavLink{
+    text-decoration: none;
+}
+
+.nav:hover {
+    background-color: grey;
+    border-radius: 5px;
 }
 
 .detail-page {
@@ -105,5 +118,67 @@ h3 {
 .not-found h1 {
     font-size: 80px;
     margin-bottom: 30px;
+}
+
+@media (width <= 800px) {
+    .post-container {
+        grid-template-columns: repeat(2, 1fr);
+        width: 30rem;
+    }
+    
+    .post h2 {
+        font-size: 20px;
+    }
+    
+    .details {
+        width: 400px;
+    }
+}
+
+@media (width <= 480px) {
+    .container {
+        display: block;
+        margin: 0;
+    }
+    
+    .post-container {
+        display: flex;
+        flex-direction: column;
+        grid-template-columns: repeat(1, 1fr);
+        width: 20rem;
+        margin: auto;
+    }
+    
+    .menu {
+        display: inline;
+        font-size: 20px;
+    }
+    
+    .sidebar {
+        display: flex;
+        height: 50px;
+        align-items: center;
+    }
+    
+    .sidebar h2 {
+        display: none;
+    }
+    
+    nav {
+        display: flex;
+    }
+    
+    .nav-links {
+        display: none;
+        flex-direction: column;
+      }
+    
+      .nav-links.show {
+        display: flex;
+      }
+      
+      .details {
+          width: 300px;
+      }
 }
 
