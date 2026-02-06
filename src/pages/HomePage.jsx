@@ -1,33 +1,14 @@
-import { useEffect } from "react"
-import { useState } from "react"
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router"
+import fetchPosts from "../api/Posts";
 
 export default function HomePage() {
-  const [posts, setPosts] = useState([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(null)
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['posts'],
+    queryFn: fetchPosts 
+  })
     
-    useEffect(() => {
-      async function fetchPosts() {
-        try {
-          setLoading(true)
-          const response = await fetch('https://api.oluwasetemi.dev/posts')
-          if (!response.ok) {
-            throw new Error('Failed to fetch posts')
-          }
-          const result = await response.json()
-          setPosts(result.data)
-        } catch (error) {
-          setError(error.message)
-        } finally {
-          setLoading(false)
-        }
-      }
-      
-      fetchPosts()
-    }, [])
-    
-    if (loading) {
+    if (isLoading) {
       return <div>Loading posts...</div>
     }
   if (error) {
@@ -38,7 +19,7 @@ export default function HomePage() {
     <div>
       <h1>Blogposts</h1>
       <div className="post-container">
-        {posts.map((post) => (
+        {data.map((post) => (
           <Link key={post.id} to={`/post/${post.id}`} style={{
             textDecoration: 'none',
           }}>

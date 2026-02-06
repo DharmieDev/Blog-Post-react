@@ -120,6 +120,11 @@ h3 {
     margin-bottom: 30px;
 }
 
+.error-page {
+    text-align: center;
+    width: 100%;
+}
+
 @media (width <= 800px) {
     .post-container {
         grid-template-columns: repeat(2, 1fr);

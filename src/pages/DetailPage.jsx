@@ -1,38 +1,21 @@
-import { useEffect } from "react"
-import { useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 import { useParams } from "react-router"
+import { fetchPostById } from "../api/Posts"
 
 
 export default function DetailPage() {
   const { id } = useParams()
-  const [post, setPost] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const[error, setError] = useState(null)
+  const { data: post, isLoading, error } = useQuery({
+    queryKey: ["post", id],
+    queryFn: fetchPostById,
+    enabled: !!id
+  })
   
-  useEffect(() => {
-    async function fetchPost() {
-      try {
-        setLoading(true)
-        const response = await fetch(`https://api.oluwasetemi.dev/posts/${id}`)
-        if (!response.ok) {
-          throw new Error("Failed to fetch post")
-        }
-        const result = await response.json()
-        setPost(result) 
-      } catch (error) {
-        setError(error.message)
-      } finally {
-        setLoading(false)
-       }
-    }
-    fetchPost()
-  }, [id])
-  
-  if (loading) {
+  if (isLoading) {
     return <div>Loading Post...</div>
   }
 
-  if (error) return <div>Error: {error}</div>
+  if (error) return <div>Error: {error.message}</div>
   
   if (!post) return <div>Post not found</div>
 
